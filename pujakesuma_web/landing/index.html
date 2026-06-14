@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PUJAKESUMA (Putra Jawa Kelahiran Sumatera) - Organisasi Keluarga Suku Jawa se-Kota Binjai. Pendataan digital keluarga dan individu untuk pemerataan pembangunan sosial.">
+    <meta name="keywords" content="Pujakesuma, Suku Jawa, Binjai, Sumatera Utara, Putra Jawa Kelahiran Sumatera, Pendataan Pujakesuma">
+    <meta name="author" content="PUJAKESUMA Binjai">
+    <title>PUJAKESUMA Kota Binjai — Pendataan Warga Jawa</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet.js Maps CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader-wrapper">
+        <div class="loader-content">
+            <svg class="gunungan-loader" viewBox="0 0 100 120" width="120" height="150">
+                <path d="M50 10 L85 80 L65 80 L75 105 L25 105 L35 80 L15 80 Z" fill="none" stroke="#D4AF37" stroke-width="2"/>
+                <path d="M50 10 L50 105" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="2,2"/>
+                <circle cx="50" cy="50" r="10" fill="none" stroke="#D4AF37" stroke-width="1"/>
+            </svg>
+            <h2 class="loader-title">PUJAKESUMA</h2>
+            <p class="loader-subtitle">Krama Inggil • Guyub Rukun • Migunani</p>
+            <div class="loader-bar"><div class="loader-progress"></div></div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <div class="logo-area">
+                <div class="logo-gold-circle">
+                    <i class="fa-solid fa-crown logo-icon"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">PUJAKESUMA</span>
+                    <span class="logo-desc">Kota Binjai</span>
+                </div>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#hero" class="nav-link active">Beranda</a>
+                <a href="#profil" class="nav-link">Profil</a>
+                <a href="#sebaran" class="nav-link">Peta Sebaran</a>
+                <a href="#statistik" class="nav-link">Statistik</a>
+                <a href="#dokumentasi" class="nav-link">Dokumentasi</a>
+                <a href="#kontak" class="nav-link">Hubungi</a>
+                <a href="/dashboard/login" class="btn-login-nav"><i class="fa-solid fa-right-to-bracket"></i> Masuk Admin</a>
+            </nav>
+            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Buka Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="batik-pattern-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge-pujakesuma">
+                        <i class="fa-solid fa-shield-halved"></i> Putra Jawa Kelahiran Sumatera
+                    </div>
+                    <h1 class="hero-title">Guyub Rukun Mbangun <span class="gold-text">Binjai</span></h1>
+                    <p class="hero-lead">Menyatukan, mendata, dan memperdayakan segenap putra-putri keturunan Jawa di Kota Binjai untuk berkontribusi aktif dalam pembangunan daerah yang berbudaya dan harmonis.</p>
+                    <div class="hero-actions">
+                        <a href="#sebaran" class="btn-primary-gold"><i class="fa-solid fa-map-location-dot"></i> Lihat Peta Sebaran</a>
+                        <a href="#profil" class="btn-secondary-outline">Kenali Kami Lebih Dekat</a>
+                    </div>
+                    <div class="hero-mini-stats">
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-num">500+</span>
+                            <span class="mini-stat-lbl">Petugas Lapangan</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-num">5+</span>
+                            <span class="mini-stat-lbl">Kecamatan Terdata</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-stat-num">100%</span>
+                            <span class="mini-stat-lbl">Aman & Terverifikasi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="gunungan-wrapper">
+                        <!-- Gunungan SVG Illustration -->
+                        <svg class="gunungan-svg" viewBox="0 0 500 600" width="100%" height="100%">
+                            <defs>
+                                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFE07D" />
+                                    <stop offset="50%" stop-color="#D4AF37" />
+                                    <stop offset="100%" stop-color="#8A6605" />
+                                </linearGradient>
+                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="8" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
+                            <!-- Silhouette Shadow -->
+                            <path class="shadow-path" d="M250 50 L420 380 L320 380 L370 500 L130 500 L180 380 L80 380 Z" fill="#800020" opacity="0.5" filter="url(#glow)"/>
+                            <!-- Main Outer Frame -->
+                            <path class="outer-frame" d="M250 40 L430 380 L330 380 L380 500 L120 500 L170 380 L70 380 Z" fill="none" stroke="url(#goldGrad)" stroke-width="4" filter="url(#glow)"/>
+                            <!-- Tree of Life / Pohon Hayat Inside -->
+                            <path d="M250 500 L250 200" stroke="url(#goldGrad)" stroke-width="8" />
+                            <path d="M250 380 Q320 320 380 340 M250 380 Q180 320 120 340" fill="none" stroke="url(#goldGrad)" stroke-width="4" />
+                            <path d="M250 300 Q330 230 350 180 M250 300 Q170 230 150 180" fill="none" stroke="url(#goldGrad)" stroke-width="4" />
+                            <path d="M250 240 Q300 170 280 120 M250 240 Q200 170 220 120" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
+                            <!-- Decorative Wings -->
+                            <path d="M250 480 Q170 450 120 490 Q200 500 250 480 Z M250 480 Q330 450 380 490 Q300 500 250 480 Z" fill="url(#goldGrad)" opacity="0.8" />
+                            <!-- Bottom Base -->
+                            <rect x="100" y="500" width="300" height="20" rx="10" fill="url(#goldGrad)" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,42.7C1120,32,1280,32,1360,32L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="#1a1a2e"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profil" class="profile-section">
+        <div class="container">
+            <div class="section-title-wrapper text-center">
+                <span class="section-tag">NILAI UTAMA</span>
+                <h2 class="section-title">Mengenal Pujakesuma</h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="profile-grid">
+                <div class="profile-card card-jawa">
+                    <div class="card-batik-bg"></div>
+                    <div class="card-icon-wrapper">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <h3>Guyub Rukun</h3>
+                    <p>Membina kerukunan, gotong royong, dan kebersamaan yang erat antar sesama keturunan Jawa di tanah perantauan Sumatera.</p>
+                </div>
+                <div class="profile-card card-jawa">
+                    <div class="card-batik-bg"></div>
+                    <div class="card-icon-wrapper">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h3>Migunani</h3>
+                    <p>Menjadi pribadi dan organisasi yang bermanfaat bagi masyarakat sekitar serta mendukung kemajuan Kota Binjai secara berkesinambungan.</p>
+                </div>
+                <div class="profile-card card-jawa">
+                    <div class="card-batik-bg"></div>
+                    <div class="card-icon-wrapper">
+                        <i class="fa-solid fa-scroll"></i>
+                    </div>
+                    <h3>Melestarikan Budaya</h3>
+                    <p>Menjaga nilai-nilai luhur kebudayaan Jawa, seperti sopan santun (unggah-ungguh), kesenian, dan kearifan lokal agar tetap eksis.</p>
+                </div>
+            </div>
+
+            <div class="about-pujakesuma-detailed">
+                <div class="about-img-frame">
+                    <img src="https://images.unsplash.com/photo-1598124146163-36819847286d?q=80&width=800&auto=format&fit=crop" alt="Dokumentasi Pujakesuma" class="about-img">
+                </div>
+                <div class="about-text-content">
+                    <h3>Visi & Misi DPD Pujakesuma Kota Binjai</h3>
+                    <p>Menjadi wadah pemersatu suku Jawa kelahiran Sumatera di Kota Binjai yang mandiri, berbudaya, sejahtera, dan bermartabat, serta aktif berkontribusi dalam pembangunan masyarakat majemuk Kota Binjai.</p>
+                    <ul class="about-list">
+                        <li><i class="fa-regular fa-circle-check gold-text"></i> Pendataan akurat warga Jawa secara digital se-Kota Binjai.</li>
+                        <li><i class="fa-regular fa-circle-check gold-text"></i> Peningkatan pemberdayaan ekonomi berbasis komunitas.</li>
+                        <li><i class="fa-regular fa-circle-check gold-text"></i> Kolaborasi dengan pemerintah kota dalam program sosial budaya.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maps Section -->
+    <section id="sebaran" class="maps-section">
+        <div class="container">
+            <div class="section-title-wrapper text-center">
+                <span class="section-tag">INTERAKTIF</span>
+                <h2 class="section-title">Peta Sebaran Data Warga</h2>
+                <div class="title-underline"></div>
+                <p class="section-desc">Visualisasi titik sebaran warga suku Jawa yang telah terdata oleh petugas lapangan di seluruh kelurahan se-Kota Binjai.</p>
+            </div>
+            
+            <div class="map-wrapper">
+                <div class="map-sidebar">
+                    <h4 class="sidebar-title"><i class="fa-solid fa-filter"></i> Filter Wilayah</h4>
+                    <div class="filter-group">
+                        <label for="filterKecamatan">Kecamatan</label>
+                        <select id="filterKecamatan" class="custom-select">
+                            <option value="all">Semua Kecamatan</option>
+                            <option value="Binjai Kota">Binjai Kota</option>
+                            <option value="Binjai Barat">Binjai Barat</option>
+                            <option value="Binjai Timur">Binjai Timur</option>
+                            <option value="Binjai Utara">Binjai Utara</option>
+                            <option value="Binjai Selatan">Binjai Selatan</option>
+                        </select>
+                    </div>
+                    <div class="map-stats-summary">
+                        <div class="map-stat-lbl">Total Keluarga Terpetakan</div>
+                        <div class="map-stat-val" id="mappedFamiliesCount">382</div>
+                        <div class="map-stat-lbl">Total Individu</div>
+                        <div class="map-stat-val" id="mappedIndividualsCount">1,528</div>
+                    </div>
+                    <div class="legend-box">
+                        <h5>Kepadatan Sebaran</h5>
+                        <div class="legend-row">
+                            <span class="legend-color high"></span> Tinggi (&gt; 100 KK)
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-color medium"></span> Sedang (50 - 100 KK)
+                        </div>
+                        <div class="legend-row">
+                            <span class="legend-color low"></span> Rendah (&lt; 50 KK)
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container-inner">
+                    <div id="leafletMap" style="height: 500px; width: 100%; border-radius: 8px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="statistik" class="statistics-section">
+        <div class="container">
+            <div class="section-title-wrapper text-center">
+                <span class="section-tag">GRAFIK DATA</span>
+                <h2 class="section-title">Analisis & Statistik Pendataan</h2>
+                <div class="title-underline"></div>
+                <p class="section-desc">Grafik real-time jumlah warga Jawa berdasarkan kategori wilayah, kelompok usia, agama, dan pekerjaan.</p>
+            </div>
+
+            <div class="stats-grid">
+                <!-- Stat Card 1 -->
+                <div class="stat-box">
+                    <h4>Distribusi Per Kecamatan</h4>
+                    <div class="chart-container">
+                        <!-- Custom CSS SVG Bar Chart -->
+                        <svg class="bar-chart-svg" viewBox="0 0 400 250">
+                            <!-- Axis Lines -->
+                            <line x1="50" y1="20" x2="50" y2="200" stroke="#444" stroke-width="1"/>
+                            <line x1="50" y1="200" x2="380" y2="200" stroke="#444" stroke-width="1"/>
+                            <!-- Y Axis Grid -->
+                            <line x1="50" y1="150" x2="380" y2="150" stroke="#222" stroke-dasharray="4" stroke-width="1"/>
+                            <line x1="50" y1="100" x2="380" y2="100" stroke="#222" stroke-dasharray="4" stroke-width="1"/>
+                            <line x1="50" y1="50" x2="380" y2="50" stroke="#222" stroke-dasharray="4" stroke-width="1"/>
+                            <!-- Labels Y -->
+                            <text x="35" y="204" fill="#888" font-size="10" text-anchor="end">0</text>
+                            <text x="35" y="154" fill="#888" font-size="10" text-anchor="end">100</text>
+                            <text x="35" y="104" fill="#888" font-size="10" text-anchor="end">200</text>
+                            <text x="35" y="54" fill="#888" font-size="10" text-anchor="end">300</text>
+                            
+                            <!-- Bars (Kecamatan: Utara, Barat, Timur, Selatan, Kota) -->
+                            <!-- Binjai Utara -->
+                            <rect x="75" y="60" width="35" height="140" fill="url(#barGrad)" rx="3"/>
+                            <text x="92.5" y="215" fill="#aaa" font-size="9" text-anchor="middle">Utara</text>
+                            <text x="92.5" y="50" fill="#FFE07D" font-size="10" text-anchor="middle" font-weight="bold">280</text>
+                            
+                            <!-- Binjai Barat -->
+                            <rect x="135" y="110" width="35" height="90" fill="url(#barGrad)" rx="3"/>
+                            <text x="152.5" y="215" fill="#aaa" font-size="9" text-anchor="middle">Barat</text>
+                            <text x="152.5" y="100" fill="#FFE07D" font-size="10" text-anchor="middle" font-weight="bold">180</text>
+                            
+                            <!-- Binjai Timur -->
+                            <rect x="195" y="75" width="35" height="125" fill="url(#barGrad)" rx="3"/>
+                            <text x="212.5" y="215" fill="#aaa" font-size="9" text-anchor="middle">Timur</text>
+                            <text x="212.5" y="65" fill="#FFE07D" font-size="10" text-anchor="middle" font-weight="bold">250</text>
+                            
+                            <!-- Binjai Selatan -->
+                            <rect x="255" y="90" width="35" height="110" fill="url(#barGrad)" rx="3"/>
+                            <text x="272.5" y="215" fill="#aaa" font-size="9" text-anchor="middle">Selatan</text>
+                            <text x="272.5" y="80" fill="#FFE07D" font-size="10" text-anchor="middle" font-weight="bold">220</text>
+                            
+                            <!-- Binjai Kota -->
+                            <rect x="315" y="130" width="35" height="70" fill="url(#barGrad)" rx="3"/>
+                            <text x="332.5" y="215" fill="#aaa" font-size="9" text-anchor="middle">Kota</text>
+                            <text x="332.5" y="120" fill="#FFE07D" font-size="10" text-anchor="middle" font-weight="bold">140</text>
+                            
+                            <defs>
+                                <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#D4AF37"/>
+                                    <stop offset="100%" stop-color="#800020"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Stat Card 2 -->
+                <div class="stat-box">
+                    <h4>Distribusi Kelompok Usia</h4>
+                    <div class="chart-container">
+                        <!-- Custom CSS SVG Donut Chart -->
+                        <svg class="donut-chart-svg" viewBox="0 0 300 250">
+                            <!-- Background Circles for each segment -->
+                            <!-- Total is 1000 for calculation. Segments: Anak(20%), Remaja(15%), Dewasa(50%), Lansia(15%) -->
+                            <!-- Stroke-dasharray = (percent * perimeter) / 100. R=70, P=2 * pi * 70 = 439.8 -->
+                            
+                            <!-- Dewasa (50%): Dasharray=219.9, Dashoffset=0 -->
+                            <circle cx="150" cy="110" r="70" fill="none" stroke="#D4AF37" stroke-width="20" stroke-dasharray="219.9 439.8" stroke-dashoffset="0"/>
+                            
+                            <!-- Anak-anak (20%): Dasharray=87.9, Dashoffset=-219.9 -->
+                            <circle cx="150" cy="110" r="70" fill="none" stroke="#800020" stroke-width="20" stroke-dasharray="87.9 439.8" stroke-dashoffset="-219.9"/>
+                            
+                            <!-- Lansia (15%): Dasharray=65.9, Dashoffset=-307.8 -->
+                            <circle cx="150" cy="110" r="70" fill="none" stroke="#10b981" stroke-width="20" stroke-dasharray="65.9 439.8" stroke-dashoffset="-307.8"/>
+                            
+                            <!-- Remaja (15%): Dasharray=65.9, Dashoffset=-373.7 -->
+                            <circle cx="150" cy="110" r="70" fill="none" stroke="#3b82f6" stroke-width="20" stroke-dasharray="65.9 439.8" stroke-dashoffset="-373.7"/>
+                            
+                            <!-- Center Hole -->
+                            <circle cx="150" cy="110" r="50" fill="#1a1a2e"/>
+                            <text x="150" y="115" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Demografi</text>
+                            
+                            <!-- Legend -->
+                            <rect x="10" y="210" width="10" height="10" fill="#D4AF37"/>
+                            <text x="25" y="219" fill="#aaa" font-size="9">Dewasa (50%)</text>
+                            
+                            <rect x="85" y="210" width="10" height="10" fill="#800020"/>
+                            <text x="100" y="219" fill="#aaa" font-size="9">Anak-anak (20%)</text>
+                            
+                            <rect x="175" y="210" width="10" height="10" fill="#10b981"/>
+                            <text x="190" y="219" fill="#aaa" font-size="9">Lansia (15%)</text>
+                            
+                            <rect x="235" y="210" width="10" height="10" fill="#3b82f6"/>
+                            <text x="250" y="219" fill="#aaa" font-size="9">Remaja (15%)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery/Dokumentasi Section -->
+    <section id="dokumentasi" class="documentation-section">
+        <div class="container">
+            <div class="section-title-wrapper text-center">
+                <span class="section-tag">GALERI KEGIATAN</span>
+                <h2 class="section-title">Dokumentasi & Kegiatan</h2>
+                <div class="title-underline"></div>
+                <p class="section-desc">Kumpulan foto dokumentasi berbagai kegiatan, silaturahmi, dan bakti sosial DPD Pujakesuma Kota Binjai.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&width=600&auto=format&fit=crop" alt="Silaturahmi Akbar">
+                    <div class="gallery-overlay">
+                        <h4>Silaturahmi Akbar</h4>
+                        <p>Kecamatan Binjai Utara - Mei 2026</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&width=600&auto=format&fit=crop" alt="Pemberdayaan UMKM">
+                    <div class="gallery-overlay">
+                        <h4>Pemberdayaan UMKM</h4>
+                        <p>Pelatihan Usaha Warga - April 2026</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&width=600&auto=format&fit=crop" alt="Pentas Seni Gamelan">
+                    <div class="gallery-overlay">
+                        <h4>Pentas Seni Gamelan Jawa</h4>
+                        <p>Hari Jadi Kota Binjai - Maret 2026</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&width=600&auto=format&fit=crop" alt="Bakti Sosial Warga">
+                    <div class="gallery-overlay">
+                        <h4>Bakti Sosial Pujakesuma</h4>
+                        <p>Penyerahan Sembako - Februari 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-panel">
+                    <span class="section-tag">KONTAK</span>
+                    <h2>Sekretariat DPD Pujakesuma Binjai</h2>
+                    <p class="contact-lead">Silakan hubungi kami untuk informasi keanggotaan, administrasi, atau kemitraan sosial budaya.</p>
+                    
+                    <div class="contact-detail-row">
+                        <i class="fa-solid fa-map-location-dot gold-text"></i>
+                        <div>
+                            <h5>Alamat Kantor</h5>
+                            <p>Jl. Jenderal Sudirman No. 120, Kartini, Binjai Kota, Kota Binjai, Sumatera Utara 20714</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail-row">
+                        <i class="fa-solid fa-envelope-open-text gold-text"></i>
+                        <div>
+                            <h5>Email Resmi</h5>
+                            <p>dpd@pujakesuma.id</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail-row">
+                        <i class="fa-solid fa-phone gold-text"></i>
+                        <div>
+                            <h5>Telepon / WhatsApp</h5>
+                            <p>+62 812-3456-7890 (Humas)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-panel">
+                    <h3>Kirim Pesan</h3>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Nama Lengkap</label>
+                                <input type="text" id="contactName" placeholder="Masukkan nama Anda" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" placeholder="nama@email.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactMessage">Pesan Anda</label>
+                                <textarea id="contactMessage" rows="5" placeholder="Tuliskan pesan atau pertanyaan Anda di sini..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary-gold w-full">Kirim Pesan <i class="fa-regular fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-bottom">
+            <p>&copy; 2026 DPD PUJAKESUMA Kota Binjai. Hak Cipta Dilindungi Undang-Undang.</p>
+            <div class="footer-links">
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet.js Map Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Main JavaScript Code -->
+    <script src="js/main.js"></script>
+</body>
+</html>
