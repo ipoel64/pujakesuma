@@ -228,6 +228,73 @@ class _KeluargaReviewScreenState extends State<KeluargaReviewScreen> {
       return;
     }
 
+    // Validate all members' data first to prevent database schema constraint violations
+    for (int i = 0; i < _anggotaList.length; i++) {
+      final member = _anggotaList[i];
+      final String nama = (member['nama_lengkap'] ?? '').toString().trim();
+      final String nik = (member['nik'] ?? '').toString().trim();
+      
+      if (nama.isEmpty || nama.toLowerCase() == 'no name') {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.warning, color: Colors.orangeAccent),
+                SizedBox(width: 8),
+                Text('Data Belum Lengkap'),
+              ],
+            ),
+            content: Text(
+              'Nama anggota keluarga ke-${i + 1} masih kosong atau bernilai "No Name".\n\n'
+              'Silakan ketuk tombol edit (ikon pensil 📝) pada baris anggota tersebut untuk melengkapi data nama yang benar.',
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(ctx),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF800020),
+                  foregroundColor: const Color(0xFFD4AF37),
+                ),
+                child: const Text('Mengerti'),
+              ),
+            ],
+          ),
+        );
+        return;
+      }
+
+      if (nik.isEmpty || nik.length != 16) {
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Row(
+              children: [
+                Icon(Icons.warning, color: Colors.orangeAccent),
+                SizedBox(width: 8),
+                Text('NIK Tidak Valid'),
+              ],
+            ),
+            content: Text(
+              'NIK untuk "$nama" (anggota ke-${i + 1}) harus berisi tepat 16 digit angka.\n\n'
+              'Silakan edit data anggota tersebut terlebih dahulu.',
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(ctx),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF800020),
+                  foregroundColor: const Color(0xFFD4AF37),
+                ),
+                child: const Text('Mengerti'),
+              ),
+            ],
+          ),
+        );
+        return;
+      }
+    }
+
     // Check internet connection
     final bool online = await ConnectivityService.hasInternetConnection();
     if (!online) {

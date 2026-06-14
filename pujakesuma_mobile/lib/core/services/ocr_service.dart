@@ -7,7 +7,7 @@ class OcrResult {
   final String lingkungan;
   final String kelurahan;
   final String kecamatan;
-  final List<Map<String, String>> anggotaKeluarga; // list of {nik, nama, tanggal_lahir, jenis_kelamin, pekerjaan, agama}
+  final List<Map<String, String>> anggotaKeluarga; // list of {nik, nama_lengkap, tanggal_lahir, jenis_kelamin, pekerjaan, agama}
 
   OcrResult({
     required this.noKk,
@@ -104,7 +104,7 @@ class OcrService {
           if (possibleName.length > 2 && !anggotaList.any((element) => element['nik'] == foundNik)) {
             anggotaList.add({
               'nik': foundNik,
-              'nama': possibleName,
+              'nama_lengkap': possibleName,
               'tanggal_lahir': '1990-01-01', // Placeholder to be edited by user
               'jenis_kelamin': 'Laki-laki',  // Default placeholder
               'pekerjaan': 'Wiraswasta',     // Default placeholder
@@ -117,7 +117,7 @@ class OcrService {
 
     // Set first member as Kepala Keluarga if list is not empty
     if (anggotaList.isNotEmpty) {
-      namaKepala = anggotaList.first['nama'] ?? '';
+      namaKepala = anggotaList.first['nama_lengkap'] ?? '';
     } else {
       // Fallback dummy parsed name to allow proceeding in UI
       namaKepala = 'Nama Kepala Keluarga';
@@ -140,7 +140,7 @@ class OcrService {
       anggotaKeluarga: anggotaList.isNotEmpty ? anggotaList : [
         {
           'nik': '127501' + DateTime.now().millisecondsSinceEpoch.toString().substring(0, 10),
-          'nama': 'Anggota Keluarga 1',
+          'nama_lengkap': 'Anggota Keluarga 1',
           'tanggal_lahir': '1990-01-01',
           'jenis_kelamin': 'Laki-laki',
           'pekerjaan': 'Wiraswasta',
