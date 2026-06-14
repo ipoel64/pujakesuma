@@ -173,27 +173,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       HomeDashboardWidget(key: _homeKey),
-      ScanKkScreen(
-        onScanCompleted: (keluarga, anggotaList) {
-          // Reset selection to Home Dashboard
-          setState(() {
-            _selectedIndex = 0;
-          });
-          // Push review screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => KeluargaReviewScreen(
-                initialKeluargaData: keluarga,
-                initialAnggotaList: anggotaList,
-              ),
-            ),
-          ).then((_) {
-            // Reload dashboard stats
-            _homeKey.currentState?._loadStats();
-          });
-        },
-      ),
+      const SizedBox.shrink(), // Placeholder since ScanKkScreen is pushed full screen on tap
       _isLoadingChat
           ? const Center(child: CircularProgressIndicator(color: Color(0xFFD4AF37)))
           : _groupChatRoomId != null
@@ -211,7 +191,34 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: (index) {
+        onTap: (index) async {
+          if (index == 1) {
+            // Launch scanner screen as full-screen modal page
+            final result = await Navigator.push<Map<String, dynamic>>(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ScanKkScreen(),
+              ),
+            );
+            
+            if (result != null && mounted) {
+              // Push review screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => KeluargaReviewScreen(
+                    initialKeluargaData: result['keluarga'],
+                    initialAnggotaList: List<Map<String, dynamic>>.from(result['anggotaList']),
+                  ),
+                ),
+              ).then((_) {
+                // Reload dashboard stats
+                _homeKey.currentState?._loadStats();
+              });
+            }
+            return;
+          }
+          
           setState(() {
             _selectedIndex = index;
           });

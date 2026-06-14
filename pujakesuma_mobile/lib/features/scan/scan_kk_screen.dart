@@ -5,9 +5,7 @@ import 'package:camera/camera.dart';
 import '../../core/services/ocr_service.dart';
 
 class ScanKkScreen extends StatefulWidget {
-  final Function(Map<String, dynamic>, List<Map<String, dynamic>>) onScanCompleted;
-
-  const ScanKkScreen({super.key, required this.onScanCompleted});
+  const ScanKkScreen({super.key});
 
   @override
   State<ScanKkScreen> createState() => _ScanKkScreenState();
@@ -85,7 +83,15 @@ class _ScanKkScreenState extends State<ScanKkScreen> {
       final List<Map<String, dynamic>> anggotaList = ocrResult.anggotaKeluarga;
 
       if (mounted) {
-        widget.onScanCompleted(keluargaData, anggotaList);
+        // Restore default portrait mode when exiting camera screen
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+        Navigator.pop(context, {
+          'keluarga': keluargaData,
+          'anggotaList': anggotaList,
+        });
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -103,21 +109,6 @@ class _ScanKkScreenState extends State<ScanKkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pindai Kartu Keluarga'),
-        automaticallyImplyLeading: false, // Prevent navigation out without restoring orientation
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Restore default portrait mode when exiting camera manually
-            SystemChrome.setPreferredOrientations([
-              DeviceOrientation.portraitUp,
-              DeviceOrientation.portraitDown,
-            ]);
-            Navigator.maybePop(context);
-          },
-        ),
-      ),
       backgroundColor: Colors.black,
       body: _isProcessing
           ? const Center(
@@ -142,22 +133,47 @@ class _ScanKkScreenState extends State<ScanKkScreen> {
               ? Stack(
                   children: [
                     // Full screen camera preview
-                    Center(
+                    Positioned.fill(
                       child: CameraPreview(_cameraController!),
                     ),
                     
                     // Guided Frame Overlay for Kartu Keluarga
-                    Container(
-                      decoration: ShapeDecoration(
-                        shape: _KkOverlayShape(),
+                    Positioned.fill(
+                      child: Container(
+                        decoration: ShapeDecoration(
+                          shape: _KkOverlayShape(),
+                        ),
+                      ),
+                    ),
+                    
+                    // Custom Floating Back Button (placed on top left)
+                    Positioned(
+                      top: 16,
+                      left: 16,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.arrow_back, color: Colors.white),
+                          onPressed: () {
+                            // Restore default portrait mode when exiting camera manually
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                              DeviceOrientation.portraitDown,
+                            ]);
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ),
                     
                     // Help Text
                     Positioned(
                       top: 20,
-                      left: 16,
-                      right: 16,
+                      left: 80,
+                      right: 80,
                       child: Center(
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -174,7 +190,7 @@ class _ScanKkScreenState extends State<ScanKkScreen> {
                       ),
                     ),
                     
-                    // Capture Button (on right side or bottom)
+                    // Capture Button (placed on right side for easier landscape access, or centered bottom)
                     Positioned(
                       bottom: 20,
                       left: 0,
@@ -228,9 +244,16 @@ class _KkOverlayShape extends ShapeBorder {
     final width = rect.width;
     final height = rect.height;
     
-    // Transparent red guideline window (standard A4 card proportion adjusted for landscape)
-    final double cardHeight = height * 0.75;
-    final double cardWidth = cardHeight * 1.5;
+    // Calculate guided box size: 85% of screen height, keeping 1.5 landscape aspect ratio
+    double cardHeight = height * 0.85;
+    double cardWidth = cardHeight * 1.5;
+    
+    // Cap width to 92% of screen width if it overflows
+    if (cardWidth > width * 0.92) {
+      cardWidth = width * 0.92;
+      cardHeight = cardWidth / 1.5;
+    }
+    
     final double left = (width - cardWidth) / 2;
     final double top = (height - cardHeight) / 2;
 
