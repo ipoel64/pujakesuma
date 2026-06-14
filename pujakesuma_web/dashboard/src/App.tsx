@@ -4,7 +4,6 @@ import LandingPage from './components/LandingPage'
 import { 
   Users, 
   Home, 
-  Map, 
   MessageSquare, 
   FileText, 
   Settings, 
@@ -359,7 +358,7 @@ export default function App() {
               <label>Kata Sandi</label>
               <input 
                 type="password" 
-                placeholder="••••••••" 
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" 
                 className="search-input" 
                 style={{ paddingLeft: '16px' }}
                 value={password}
@@ -389,136 +388,136 @@ export default function App() {
   const userEmail = session ? session.user.email : '';
 
   return (
-    <div class="admin-layout">
+    <div className="admin-layout">
       {/* Sidebar Navigation */}
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <div class="sidebar-logo-circle">
-            <Users size={20} class="sidebar-logo-icon" />
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <div className="sidebar-logo-circle">
+            <Users size={20} className="sidebar-logo-icon" />
           </div>
           <div>
-            <h1 class="sidebar-title-text">PUJAKESUMA</h1>
-            <span class="sidebar-subtitle">Kota Binjai</span>
+            <h1 className="sidebar-title-text">PUJAKESUMA</h1>
+            <span className="sidebar-subtitle">Kota Binjai</span>
           </div>
         </div>
 
-        <nav class="sidebar-nav">
+        <nav className="sidebar-nav">
           <a 
             href="#" 
-            class={`sidebar-link ${activeTab === 'ringkasan' ? 'active' : ''}`}
+            className={`sidebar-link ${activeTab === 'ringkasan' ? 'active' : ''}`}
             onClick={() => { setActiveTab('ringkasan'); setSearchQuery(''); }}
           >
             <Home size={18} /> Ringkasan
           </a>
           <a 
             href="#" 
-            class={`sidebar-link ${activeTab === 'keluarga' ? 'active' : ''}`}
+            className={`sidebar-link ${activeTab === 'keluarga' ? 'active' : ''}`}
             onClick={() => { setActiveTab('keluarga'); setSearchQuery(''); }}
           >
             <Users size={18} /> Data Keluarga
           </a>
           <a 
             href="#" 
-            class={`sidebar-link ${activeTab === 'individu' ? 'active' : ''}`}
+            className={`sidebar-link ${activeTab === 'individu' ? 'active' : ''}`}
             onClick={() => { setActiveTab('individu'); setSearchQuery(''); }}
           >
             <UserCheck size={18} /> Data Individu
           </a>
           <a 
             href="#" 
-            class={`sidebar-link ${activeTab === 'chat' ? 'active' : ''}`}
+            className={`sidebar-link ${activeTab === 'chat' ? 'active' : ''}`}
             onClick={() => { setActiveTab('chat'); setSearchQuery(''); }}
           >
             <MessageSquare size={18} /> Chat Realtime
           </a>
           <a 
             href="#" 
-            class={`sidebar-link ${activeTab === 'laporan' ? 'active' : ''}`}
+            className={`sidebar-link ${activeTab === 'laporan' ? 'active' : ''}`}
             onClick={() => { setActiveTab('laporan'); setSearchQuery(''); }}
           >
             <FileText size={18} /> Cetak Laporan
           </a>
         </nav>
 
-        <div class="sidebar-footer">
-          <div class="user-profile-widget">
+        <div className="sidebar-footer">
+          <div className="user-profile-widget">
             <img 
               src={dummyAdminProfile.avatar_url} 
               alt={userEmail} 
-              class="user-avatar"
+              className="user-avatar"
             />
-            <div class="user-info-text">
-              <span class="user-name" title={userEmail}>{userEmail}</span>
-              <span class="user-role-badge">ADMIN</span>
+            <div className="user-info-text">
+              <span className="user-name" title={userEmail}>{userEmail}</span>
+              <span className="user-role-badge">ADMIN</span>
             </div>
           </div>
         </div>
       </aside>
 
       {/* Main content pane */}
-      <main class="main-content">
-        <header class="topbar">
-          <h2 class="topbar-title">
+      <main className="main-content">
+        <header className="topbar">
+          <h2 className="topbar-title">
             {activeTab === 'ringkasan' && 'Dashboard Overview'}
             {activeTab === 'keluarga' && 'Pengelolaan Data Keluarga'}
             {activeTab === 'individu' && 'Daftar Anggota Keluarga / Individu'}
             {activeTab === 'chat' && 'Ruang Komunikasi Realtime'}
             {activeTab === 'laporan' && 'Pusat Dokumen & Ekspor Laporan'}
           </h2>
-          <div class="topbar-actions">
-            <div class="notifications-bell">
+          <div className="topbar-actions">
+            <div className="notifications-bell">
               <Bell size={20} />
-              <span class="bell-badge"></span>
+              <span className="bell-badge"></span>
             </div>
-            <button class="btn btn-outline" style={{ padding: '8px 12px' }} onClick={handleLogout}>
+            <button className="btn btn-outline" style={{ padding: '8px 12px' }} onClick={handleLogout}>
               <LogOut size={16} /> Keluar
             </button>
           </div>
         </header>
 
-        <div class="content-pane">
+        <div className="content-pane">
           {/* TAB 1: SUMMARY OVERVIEW */}
           {activeTab === 'ringkasan' && (
             <div>
               {/* Summary Cards */}
-              <div class="stats-grid">
-                <div class="stat-card">
-                  <div class="stat-info">
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="stat-info">
                     <h5>Total Keluarga</h5>
-                    <span class="stat-value">{initialStats.totalKeluarga}</span>
+                    <span className="stat-value">{initialStats.totalKeluarga}</span>
                   </div>
-                  <div class="stat-icon-box"><Home size={22} /></div>
+                  <div className="stat-icon-box"><Home size={22} /></div>
                 </div>
-                <div class="stat-card">
-                  <div class="stat-info">
+                <div className="stat-card">
+                  <div className="stat-info">
                     <h5>Total Individu</h5>
-                    <span class="stat-value">{initialStats.totalIndividu}</span>
+                    <span className="stat-value">{initialStats.totalIndividu}</span>
                   </div>
-                  <div class="stat-icon-box"><Users size={22} /></div>
+                  <div className="stat-icon-box"><Users size={22} /></div>
                 </div>
-                <div class="stat-card">
-                  <div class="stat-info">
+                <div className="stat-card">
+                  <div className="stat-info">
                     <h5>Terverifikasi</h5>
-                    <span class="stat-value" style={{ color: 'var(--success)' }}>{initialStats.totalVerified}</span>
+                    <span className="stat-value" style={{ color: 'var(--success)' }}>{initialStats.totalVerified}</span>
                   </div>
-                  <div class="stat-icon-box" style={{ color: 'var(--success)', backgroundColor: 'rgba(16,185,129,0.1)' }}><CheckCircle size={22} /></div>
+                  <div className="stat-icon-box" style={{ color: 'var(--success)', backgroundColor: 'rgba(16,185,129,0.1)' }}><CheckCircle size={22} /></div>
                 </div>
-                <div class="stat-card">
-                  <div class="stat-info">
+                <div className="stat-card">
+                  <div className="stat-info">
                     <h5>Menunggu Review</h5>
-                    <span class="stat-value" style={{ color: 'var(--warning)' }}>{initialStats.totalPending}</span>
+                    <span className="stat-value" style={{ color: 'var(--warning)' }}>{initialStats.totalPending}</span>
                   </div>
-                  <div class="stat-icon-box" style={{ color: 'var(--warning)', backgroundColor: 'rgba(245,158,11,0.1)' }}><Clock size={22} /></div>
+                  <div className="stat-icon-box" style={{ color: 'var(--warning)', backgroundColor: 'rgba(245,158,11,0.1)' }}><Clock size={22} /></div>
                 </div>
               </div>
 
               {/* Visuals Panels */}
-              <div class="visuals-grid">
-                <div class="dashboard-panel">
-                  <div class="panel-header">
-                    <h3 class="panel-title">Sebaran Data per Kecamatan</h3>
+              <div className="visuals-grid">
+                <div className="dashboard-panel">
+                  <div className="panel-header">
+                    <h3 className="panel-title">Sebaran Data per Kecamatan</h3>
                   </div>
-                  <div class="panel-chart">
+                  <div className="panel-chart">
                     {/* SVG Visualization */}
                     <svg viewBox="0 0 400 220" style={{ width: '100%' }}>
                       <line x1="40" y1="10" x2="40" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
@@ -548,11 +547,11 @@ export default function App() {
                   </div>
                 </div>
 
-                <div class="dashboard-panel">
-                  <div class="panel-header">
-                    <h3 class="panel-title">Sebaran Usia Anggota</h3>
+                <div className="dashboard-panel">
+                  <div className="panel-header">
+                    <h3 className="panel-title">Sebaran Usia Anggota</h3>
                   </div>
-                  <div class="panel-chart">
+                  <div className="panel-chart">
                     {/* SVG Donut Chart */}
                     <svg viewBox="0 0 200 200" style={{ maxHeight: '200px' }}>
                       <circle cx="100" cy="100" r="70" fill="none" stroke="var(--primary-maroon)" stroke-width="16" stroke-dasharray="220 440" stroke-dashoffset="0" />
@@ -586,25 +585,25 @@ export default function App() {
           {/* TAB 2: DATA KELUARGA */}
           {activeTab === 'keluarga' && (
             <div>
-              <div class="table-controls">
-                <div class="search-input-wrapper">
-                  <Search size={16} class="search-icon" />
+              <div className="table-controls">
+                <div className="search-input-wrapper">
+                  <Search size={16} className="search-icon" />
                   <input 
                     type="text" 
                     placeholder="Cari kepala keluarga, kelurahan, or KK..." 
-                    class="search-input"
+                    className="search-input"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <div class="btn-group">
-                  <button class="btn btn-outline"><Filter size={16} /> Filter</button>
-                  <button class="btn btn-gold" onClick={() => alert('Fungsi tambah data keluarga manual')}><Home size={16} /> Tambah Keluarga</button>
+                <div className="btn-group">
+                  <button className="btn btn-outline"><Filter size={16} /> Filter</button>
+                  <button className="btn btn-gold" onClick={() => alert('Fungsi tambah data keluarga manual')}><Home size={16} /> Tambah Keluarga</button>
                 </div>
               </div>
 
-              <div class="pujakesuma-table-wrapper">
-                <table class="pujakesuma-table">
+              <div className="pujakesuma-table-wrapper">
+                <table className="pujakesuma-table">
                   <thead>
                     <tr>
                       <th>Nomor KK</th>
@@ -627,21 +626,21 @@ export default function App() {
                         <td>{family.kelurahan}</td>
                         <td>{family.kecamatan}</td>
                         <td>
-                          <span class={`badge badge-${family.status}`}>
+                          <span className={`badge badge-${family.status}`}>
                             {family.status}
                           </span>
                         </td>
                         <td>
                           <div style={{ display: 'flex', gap: '6px' }}>
                             <button 
-                              class="btn btn-primary" 
+                              className="btn btn-primary" 
                               style={{ padding: '6px 10px', fontSize: '0.75rem', backgroundColor: 'var(--success)' }}
                               onClick={() => handleUpdateStatus(family.id, 'verified')}
                             >
                               Setuju
                             </button>
                             <button 
-                              class="btn btn-outline" 
+                              className="btn btn-outline" 
                               style={{ padding: '6px 10px', fontSize: '0.75rem', borderColor: 'var(--danger)', color: 'var(--danger)' }}
                               onClick={() => handleUpdateStatus(family.id, 'rejected')}
                             >
@@ -660,24 +659,24 @@ export default function App() {
           {/* TAB 3: DATA INDIVIDU */}
           {activeTab === 'individu' && (
             <div>
-              <div class="table-controls">
-                <div class="search-input-wrapper">
-                  <Search size={16} class="search-icon" />
+              <div className="table-controls">
+                <div className="search-input-wrapper">
+                  <Search size={16} className="search-icon" />
                   <input 
                     type="text" 
                     placeholder="Cari NIK, nama lengkap, suku..." 
-                    class="search-input"
+                    className="search-input"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <div class="btn-group">
-                  <button class="btn btn-outline" onClick={() => alert('Membuat laporan individu')}><Download size={16} /> Unduh CSV</button>
+                <div className="btn-group">
+                  <button className="btn btn-outline" onClick={() => alert('Membuat laporan individu')}><Download size={16} /> Unduh CSV</button>
                 </div>
               </div>
 
-              <div class="pujakesuma-table-wrapper">
-                <table class="pujakesuma-table">
+              <div className="pujakesuma-table-wrapper">
+                <table className="pujakesuma-table">
                   <thead>
                     <tr>
                       <th>NIK</th>
@@ -718,12 +717,12 @@ export default function App() {
           {/* TAB 4: CHAT REALTIME */}
           {activeTab === 'chat' && (
             <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px', height: '480px' }}>
-              <div class="dashboard-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px' }}>
+              <div className="dashboard-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px' }}>
                 <div style={{ flexGrow: 1, overflowY: 'auto', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {activeChats.map(c => (
                     <div key={c.id} style={{ alignSelf: c.sender.includes('Anda') ? 'flex-end' : 'flex-start', maxWidth: '80%' }}>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '4px', textAlign: c.sender.includes('Anda') ? 'right' : 'left' }}>
-                        {c.sender} • {c.time}
+                        {c.sender} â€¢ {c.time}
                       </div>
                       <div style={{ 
                         padding: '12px 16px', 
@@ -741,16 +740,16 @@ export default function App() {
                   <input 
                     type="text" 
                     placeholder="Tulis pesan untuk petugas lapangan..." 
-                    class="search-input"
+                    className="search-input"
                     style={{ paddingLeft: '16px' }}
                     value={chatText}
                     onChange={(e) => setChatText(e.target.value)}
                   />
-                  <button type="submit" class="btn btn-gold"><MessageSquare size={16} /> Kirim</button>
+                  <button type="submit" className="btn btn-gold"><MessageSquare size={16} /> Kirim</button>
                 </form>
               </div>
 
-              <div class="dashboard-panel">
+              <div className="dashboard-panel">
                 <h4 style={{ color: 'var(--accent-gold)', marginBottom: '16px' }}>Status Pengguna Online</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -772,7 +771,7 @@ export default function App() {
 
           {/* TAB 5: PRINT REPORTS */}
           {activeTab === 'laporan' && (
-            <div class="dashboard-panel" style={{ maxWidth: '700px', margin: '0 auto' }}>
+            <div className="dashboard-panel" style={{ maxWidth: '700px', margin: '0 auto' }}>
               <h3 style={{ color: 'var(--accent-gold)', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Printer /> Konfigurasi Ekspor Laporan
               </h3>
@@ -781,9 +780,9 @@ export default function App() {
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div class="form-group">
+                <div className="form-group">
                   <label>Jenis Laporan</label>
-                  <select class="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
+                  <select className="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
                     <option>Rekapitulasi Keluarga Full (Seluruh Anggota)</option>
                     <option>Hanya Individu (Perseorangan)</option>
                     <option>Laporan Ringkasan Statistik Organisasi</option>
@@ -791,16 +790,16 @@ export default function App() {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Filter Suku</label>
-                    <select class="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
+                    <select className="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
                       <option>Suku Jawa (Default Utama)</option>
                       <option>Semua Suku</option>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Filter Agama</label>
-                    <select class="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
+                    <select className="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
                       <option>Semua Agama</option>
                       <option>Islam</option>
                       <option>Kristen</option>
@@ -812,9 +811,9 @@ export default function App() {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Kecamatan</label>
-                    <select class="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
+                    <select className="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
                       <option>Semua Kecamatan</option>
                       <option>Binjai Kota</option>
                       <option>Binjai Utara</option>
@@ -823,9 +822,9 @@ export default function App() {
                       <option>Binjai Selatan</option>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Anggota Pujakesuma</label>
-                    <select class="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
+                    <select className="custom-select" style={{ backgroundColor: 'var(--bg-deep)' }}>
                       <option>Semua Status</option>
                       <option>Ya (Anggota Aktif)</option>
                       <option>Tidak</option>
@@ -834,10 +833,10 @@ export default function App() {
                 </div>
 
                 <div style={{ marginTop: '24px', display: 'flex', gap: '12px' }}>
-                  <button class="btn btn-gold" onClick={() => alert('Sedang mencetak laporan PDF Pujakesuma... (Sistem PDF compiler aktif)')}>
+                  <button className="btn btn-gold" onClick={() => alert('Sedang mencetak laporan PDF Pujakesuma... (Sistem PDF compiler aktif)')}>
                     <Printer size={16} /> Print / Cetak Laporan PDF
                   </button>
-                  <button class="btn btn-outline" onClick={() => alert('Mengekspor data ke format Excel/CSV...')}>
+                  <button className="btn btn-outline" onClick={() => alert('Mengekspor data ke format Excel/CSV...')}>
                     <Download size={16} /> Ekspor Data Excel
                   </button>
                 </div>
@@ -849,3 +848,4 @@ export default function App() {
     </div>
   )
 }
+
